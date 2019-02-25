@@ -4,9 +4,16 @@ html(lang="es")
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     meta(http-equiv="X-UA-Compatible" content="ie-edge")
-    
+
     title Webpack 4
 
   body
+    include parts/header.pug
+
     main
       h1 Texto hecho con pug
+      p Boostrap 4 Working
+      a(href="#").btn.btn-primary Button primary
+      a(href="#").btn.btn-secondary Button secondary
+
+    include parts/footer.pug

@@ -2,33 +2,38 @@ const path = require('path');
 const extractCss = require('mini-css-extract-plugin');
 const updateHtml = require('html-webpack-plugin');
 const cleanAssetDist = require('clean-webpack-plugin');
-const webpack = require('webpack');
-// const reloadServer = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+// const webpack = require('webpack'); <-- For HotModuleReplacement(HMR) in Dev Server
+// const reloadServer = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true'; <-- For HotModuleReplacement(HMR) in Middleware Server
 
 module.exports = {
   mode: 'development',
   entry: {
-    // app: ['./src/index.js', reloadServer]
+    // app: ['./src/index.js', reloadServer] <-- For Hot Middleware Server (Only one entry point)
     app: './src/index.js'
-    // print: './src/print.js'
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
+    path: path.resolve(__dirname, 'dist')
+    // publicPath: '/' <-- For Middleware Server
   },
   //Online for development
   devtool: 'inline-source-map',
-  devServer: {
-    contentBase: './dist',
-    hot: true //Active Hot Module in dev server
-  },
+  // devServer: { <-- For Web Dev Server (Not compile any files, just in memory)
+  //   contentBase: './dist',
+  //   port: 3000
+  //   hot: true <-- For HotModuleReplacement(HMR) in Dev Server
+  // },
   module: {
     rules: [
       {
         test: /\.pug$/,
         use: [
-          'pug-loader'
+          {
+            loader: 'pug-loader',
+            options: {
+              pretty: true
+            }
+          }
         ]
       },
       {
@@ -53,13 +58,12 @@ module.exports = {
         filename: "[name].css",
         chunkFilename: "[id].css"
     }),
-    // new cleanAssetDist([
-    //   'dist/*'
-    // ]),
+    new cleanAssetDist(['dist/*']),
     new updateHtml({
-      template: './src/test.pug'
-    }),
-    new webpack.HotModuleReplacementPlugin(), //Active Hot Module in dev server & middleware server
-    new webpack.NoEmitOnErrorsPlugin()
+      filename: 'main.html',
+      template: './src/index.pug'
+    })
+    // new webpack.HotModuleReplacementPlugin(), // For HotModuleReplacement(HMR) in Dev Server/Middleware server
+    // new webpack.NoEmitOnErrorsPlugin() // For HotModuleReplacement(HMR) in Middleware server
   ]
 };

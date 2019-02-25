@@ -1,8 +1,9 @@
 import _ from 'lodash';
+import 'bootstrap';
+import './main.scss';
 import printMe from './print.js';
-import './style.scss';
 import WebpackImg from './webpack.png';
-// import WebpackOldImg from './old-webpack.jpg'; <-- Test Clean Dist
+// import WebpackOldImg from './old-webpack.jpg';
 
 function component() {
   var element = document.createElement('div');
@@ -27,9 +28,10 @@ function component() {
 
 document.body.appendChild(component());
 
-if (module.hot) {
- module.hot.accept('./print.js', function() {
-   console.log('Accepting the updated printMe module!');
-   printMe();
- })
-}
+// Activating HMR in Dev Server, Change print.js for autoreload
+// if (module.hot) {
+//  module.hot.accept('./print.js', function() {
+//    console.log('Accepting the updated printMe module!');
+//    printMe();
+//  })
+// }
