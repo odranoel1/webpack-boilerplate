@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import 'bootstrap';
+//FontAwesome & bootstrap styles
 import './main.scss';
+
 import printMe from './print.js';
 import WebpackImg from './webpack.png';
 // import WebpackOldImg from './old-webpack.jpg';
