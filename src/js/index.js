@@ -1,15 +1,9 @@
-import _ from 'lodash';
-import 'bootstrap';
-//FontAwesome & bootstrap styles
-import './main.scss';
-
 import printMe from './print.js';
-import WebpackImg from './webpack.png';
+import WebpackImg from '../img/webpack.png'; //Add Images
 // import WebpackOldImg from './old-webpack.jpg';
 
-function component() {
+export default function component() {
   var element = document.createElement('div');
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
 
   // Add the image to our existing div.
   var myIcon = new Image();
@@ -21,7 +15,6 @@ function component() {
   btn.innerHTML = 'See more';
 
   btn.addEventListener('click',printMe);
-  // btn.onclick = printMe;
 
   element.appendChild(btn);
 

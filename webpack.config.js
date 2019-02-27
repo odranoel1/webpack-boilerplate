@@ -8,8 +8,8 @@ const cleanAssetDist = require('clean-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    // app: ['./src/index.js', reloadServer] <-- For Hot Middleware Server (Only one entry point)
-    app: './src/index.js'
+    // app: ['./src/main.js', reloadServer] <-- For Hot Middleware Server (Only one entry point)
+    app: './src/main.js'
   },
   output: {
     filename: '[name].bundle.js',
@@ -48,7 +48,12 @@ module.exports = {
       {
         test: /\.(png|jpg|gif)$/,
         use: [
-          'file-loader'
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'assets/img/'
+            }
+          }
         ]
       },
       {
@@ -58,7 +63,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: 'fonts/'
+              outputPath: 'assets/fonts/'
             }
           }
         ]
@@ -73,7 +78,7 @@ module.exports = {
     new cleanAssetDist(['dist/*']),
     new updateHtml({
       filename: 'main.html',
-      template: './src/index.pug'
+      template: './src/pug/index.pug'
     })
     // new webpack.HotModuleReplacementPlugin(), // For HotModuleReplacement(HMR) in Dev Server/Middleware server
     // new webpack.NoEmitOnErrorsPlugin() // For HotModuleReplacement(HMR) in Middleware server
