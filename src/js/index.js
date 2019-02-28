@@ -12,7 +12,7 @@ export default function component() {
   element.appendChild(myIcon);
 
   var btn = document.createElement('button');
-  btn.innerHTML = 'See more';
+  btn.innerHTML = 'Hello From JS';
 
   btn.addEventListener('click',printMe);
 
