@@ -10,8 +10,8 @@ module.exports = {
   mode: 'development',
   entry: {
     // app: ['./src/main.js', reloadServer] <-- For Hot Middleware Server (Only one entry point)
-    app: './src/main.js',
-    index: './src/pug/index.pug'
+    main: './src/main.js',
+    index: './src/pug/index.pug' // <--IMPORTANT For reload pug
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -79,7 +79,7 @@ module.exports = {
   },
   plugins: [
     new extractCss({
-        filename: "[name].css",
+        filename: "main.css",
         chunkFilename: "[id].css"
     }),
     new cleanAssetDist(['dist/*']),
