@@ -7,17 +7,20 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "watch": "webpack --watch",
-    "server": "webpack-dev-server --open"
+    "server": "webpack-dev-server --open",
+    "express": "node express.js"
   },
   "author": "CalamarAsesino",
   "license": "MIT",
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
+    "browser-sync": "^2.26.7",
     "clean-webpack-plugin": "^1.0.1",
-    "css-hot-loader": "^1.4.3",
     "css-loader": "^2.1.0",
     "express": "^4.16.4",
     "file-loader": "^3.0.1",
+    "gulp": "^4.0.2",
+    "gulp-pug": "^4.0.1",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",

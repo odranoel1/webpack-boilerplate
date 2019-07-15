@@ -4,25 +4,30 @@ const updateHtml = require('html-webpack-plugin');
 const cleanAssetDist = require('clean-webpack-plugin');
 const minifyCSS = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+
+//For Reload Middleware
 const webpack = require('webpack');
+const reloadServer = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 module.exports = {
   mode: 'development',
   entry: {
-    // main: './src/main.js',
-    main: './src/js/main.js',
-    vendor: './src/js/vendor.js',
-    // index: './src/pug/index.pug' // <--IMPORTANT For reload pug
+    // main: './src/js/main.js',
+    // vendor: './src/js/vendor.js',
+    main: ['./src/js/main.js', reloadServer],
+    vendor: ['./src/js/vendor.js', reloadServer],
   },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'assets/[name].js',
+    publicPath: '/'
   },
   //Online for development
   devtool: 'inline-source-map',
   //<-- Dev Server (Not compile any files, just in memory)
   devServer: {
-    contentBase: './dist',
+    contentBase: path.join(__dirname, 'src'),
+    watchContentBase: true,
     port: 9000,
     // <-- HotModuleReplacement(HMR) in Dev Server
     hot: true
@@ -43,9 +48,8 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          'css-hot-loader',
           'style-loader' , //4.Inject styles in DOM
-          extractCss.loader, //3.Extract css from js
+          // extractCss.loader, //3.Extract css from js (only for production)
           'css-loader', //2.Turn css into js
           'sass-loader' //1.Turn sass into css
         ]
@@ -83,9 +87,10 @@ module.exports = {
     }),
     new cleanAssetDist(['dist/*']),
     new updateHtml({
-      // filename: 'main.html', <-- Doesn't work with server
       template: './src/pug/index.pug'
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   optimization: { //Only in mode production
     minimizer: [
