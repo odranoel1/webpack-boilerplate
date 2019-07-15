@@ -1,3 +1,6 @@
+// SCSS (Styles)
+import '../sass/main.scss';
+
 import printMe from './print.js';
 import WebpackImg from '../img/webpack.png'; //Add Images
 // import WebpackOldImg from './old-webpack.jpg';

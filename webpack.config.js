@@ -2,29 +2,29 @@ const path = require('path');
 const extractCss = require('mini-css-extract-plugin');
 const updateHtml = require('html-webpack-plugin');
 const cleanAssetDist = require('clean-webpack-plugin');
-// <-- For HotModuleReplacement(HMR) in Dev Server
+const minifyCSS = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
-// const reloadServer = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true'; <-- For HotModuleReplacement(HMR) in Middleware Server
 
 module.exports = {
   mode: 'development',
   entry: {
-    // app: ['./src/main.js', reloadServer] <-- For Hot Middleware Server (Only one entry point)
-    main: './src/main.js',
-    index: './src/pug/index.pug' // <--IMPORTANT For reload pug
+    // main: './src/main.js',
+    main: './src/js/main.js',
+    vendor: './src/js/vendor.js',
+    // index: './src/pug/index.pug' // <--IMPORTANT For reload pug
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].bundle.js',
-    // publicPath: '/' <-- For Middleware Server
+    filename: 'assets/[name].js',
   },
   //Online for development
   devtool: 'inline-source-map',
-  //<-- For Web Dev Server (Not compile any files, just in memory)
+  //<-- Dev Server (Not compile any files, just in memory)
   devServer: {
     contentBase: './dist',
     port: 9000,
-    // <-- For HotModuleReplacement(HMR) in Dev Server
+    // <-- HotModuleReplacement(HMR) in Dev Server
     hot: true
   },
   module: {
@@ -43,16 +43,15 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          // 'style-loader',
           'css-hot-loader',
-          process.env.NODE_ENV == 'production' ? 'style-loader' : extractCss.loader,
-          'css-loader',
-          'sass-loader'
+          'style-loader' , //4.Inject styles in DOM
+          extractCss.loader, //3.Extract css from js
+          'css-loader', //2.Turn css into js
+          'sass-loader' //1.Turn sass into css
         ]
       },
       {
         test: /\.(png|jpg|gif)$/,
-        // use: ['file-loader']
         use: [
           {
             loader: 'file-loader',
@@ -79,7 +78,7 @@ module.exports = {
   },
   plugins: [
     new extractCss({
-        filename: "main.css",
+        filename: "assets/[name].css",
         chunkFilename: "[id].css"
     }),
     new cleanAssetDist(['dist/*']),
@@ -87,7 +86,10 @@ module.exports = {
       // filename: 'main.html', <-- Doesn't work with server
       template: './src/pug/index.pug'
     })
-    // new webpack.HotModuleReplacementPlugin(), // For HotModuleReplacement(HMR) in Dev Server/Middleware server
-    // new webpack.NoEmitOnErrorsPlugin() // For HotModuleReplacement(HMR) in Middleware server
-  ]
+  ],
+  optimization: { //Only in mode production
+    minimizer: [
+      new minifyCSS(), new TerserPlugin()
+    ]
+  }
 };
