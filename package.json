@@ -8,6 +8,7 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "server": "webpack-dev-server --open",
+    "sync": "node sync.js",
     "express": "node express.js"
   },
   "author": "CalamarAsesino",

@@ -4,13 +4,18 @@ html(lang="es")
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     meta(http-equiv="X-UA-Compatible" content="ie-edge")
-
     title Webpack 4
+    link(rel="stylesheet", href="assets/main.css")
+    link(rel="stylesheet", href="assets/vendor.css")
+    
+    script(src="assets/main.js")
+    script(src="assets/vendor.js")
 
   body
     include parts/header.pug
 
     main
+      h1 Hello from reload gulpas
       h1 Hello from content pug
       h2 Boostrap 4 Working...
       a(href="#").btn.btn-primary.mr-4 Button primary

@@ -1,23 +1,30 @@
 let gulp = require('gulp');
 let pug = require('gulp-pug');
-let browsersync = require('browser-sync');
+let browserSync = require('browser-sync').create();
 
-gulp.task('html', () => {
-    return gulp.src('src/pug/*.pug')
-        .pipe(pug({pretty:true}))
-        .pipe(gulp.dest('test'));
-});
+//Compile pug to html
+function html() {
+  //1. Where is my file
+  return gulp.src('src/pug/*.pug')
+  //2. Pass trough pug compiler
+  .pipe(pug({pretty:true}))
+  //3. Where do i save?
+  .pipe(gulp.dest('dist'))
+  .pipe(browserSync.stream());
+}
 
-gulp.task('browser-sync', () => {
-  browsersync.init({
+function watch(){
+  browserSync.init({
       server: {
-          baseDir: 'test'
+        baseDir: 'dist/'
       }
   });
-});
+  gulp.watch('src/pug/*.pug', html);
+  gulp.watch('src/pug/*.pug').on('change', browserSync.reload);
+  // gulp.watch('test/*.html').on('change', browserSync.reload);
+}
 
-gulp.task('watch', () => {
-     gulp.watch('app.scss', gulp.series('html'));
- });
+exports.html = html;
+exports.watch = watch;
 
-gulp.task('default', gulp.parallel('html', 'watch'));
+gulp.task('default', gulp.parallel(html, watch));
