@@ -17,6 +17,7 @@
     "@fortawesome/fontawesome-free": "^5.7.2",
     "browser-sync": "^2.26.7",
     "clean-webpack-plugin": "^1.0.1",
+    "css-hot-loader": "^1.4.4",
     "css-loader": "^2.1.0",
     "express": "^4.16.4",
     "file-loader": "^3.0.1",

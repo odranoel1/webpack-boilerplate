@@ -7,7 +7,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 //For Reload Middleware
 const webpack = require('webpack');
-const reloadServer = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+// const reloadServer = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+const reloadServer = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000';
 
 module.exports = {
   mode: 'development',
@@ -26,8 +27,9 @@ module.exports = {
   devtool: 'inline-source-map',
   //<-- Dev Server (Not compile any files, just in memory)
   devServer: {
-    contentBase: path.join(__dirname, 'src'),
-    watchContentBase: true,
+    // contentBase: path.join(__dirname, 'src'),
+    contentBase: './dist',
+    // watchContentBase: true,
     port: 9000,
     // <-- HotModuleReplacement(HMR) in Dev Server
     hot: true
@@ -48,6 +50,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
+          'css-hot-loader',
           'style-loader' , //4.Inject styles in DOM
           // extractCss.loader, //3.Extract css from js (only for production)
           'css-loader', //2.Turn css into js
@@ -89,8 +92,8 @@ module.exports = {
     new updateHtml({
       template: './src/pug/index.pug'
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin(), // For HotModuleReplacement(HMR) in Dev Server/Middleware server
+    new webpack.NoEmitOnErrorsPlugin() // For HotModuleReplacement(HMR) in Middleware server
   ],
   optimization: { //Only in mode production
     minimizer: [

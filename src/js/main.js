@@ -18,9 +18,9 @@ export default function component() {
 document.body.appendChild(component());
 
 // Activating HMR in Dev Server, Change print.js for autoreload
-// if (module.hot) {
-//  module.hot.accept('./print.js', function() {
-//    console.log('Accepting the updated printMe module!');
-//    printMe();
-//  })
-// }
+if (module.hot) {
+ module.hot.accept('./print.js', function() {
+   console.log('Accepting the updated printMe module!');
+   printMe();
+ })
+}
