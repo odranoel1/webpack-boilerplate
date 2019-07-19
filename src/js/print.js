@@ -1,3 +1,3 @@
 export default function printMe() {
-  alert("Hello asfrom print.js");
+  alert("Hello from print.js");
 }

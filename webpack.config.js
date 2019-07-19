@@ -5,34 +5,25 @@ const cleanAssetDist = require('clean-webpack-plugin');
 const minifyCSS = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
-//For Reload Middleware
+//Hot Module Replacement -- Middleware
 const webpack = require('webpack');
-// const reloadServer = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
-const reloadServer = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000';
+const hmr = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000';
 
 module.exports = {
   mode: 'development',
   entry: {
-    // main: './src/js/main.js',
-    // vendor: './src/js/vendor.js',
-    main: ['./src/js/main.js', reloadServer],
-    vendor: ['./src/js/vendor.js', reloadServer],
+    main: ['./src/js/main.js', hmr],
+    vendor: ['./src/js/vendor.js', hmr],
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'assets/[name].js',
+    filename: 'assets/[name].[hash].js',
     publicPath: '/'
   },
-  //Online for development
   devtool: 'inline-source-map',
-  //<-- Dev Server (Not compile any files, just in memory)
   devServer: {
-    // contentBase: path.join(__dirname, 'src'),
-    contentBase: './dist',
-    // watchContentBase: true,
+    contentBase: path.join(__dirname, 'dist'),
     port: 9000,
-    // <-- HotModuleReplacement(HMR) in Dev Server
-    hot: true
   },
   module: {
     rules: [
@@ -51,8 +42,7 @@ module.exports = {
         test: /\.scss$/,
         use: [
           'css-hot-loader',
-          'style-loader' , //4.Inject styles in DOM
-          // extractCss.loader, //3.Extract css from js (only for production)
+          'style-loader' , //3.Inject styles in DOM
           'css-loader', //2.Turn css into js
           'sass-loader' //1.Turn sass into css
         ]
@@ -90,14 +80,24 @@ module.exports = {
     }),
     new cleanAssetDist(['dist/*']),
     new updateHtml({
+      filename: 'perro.html',
       template: './src/pug/index.pug'
     }),
-    new webpack.HotModuleReplacementPlugin(), // For HotModuleReplacement(HMR) in Dev Server/Middleware server
-    new webpack.NoEmitOnErrorsPlugin() // For HotModuleReplacement(HMR) in Middleware server
+    new updateHtml({
+      filename: 'nana.html',
+      template: './src/pug/about.pug'
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   optimization: { //Only in mode production
     minimizer: [
-      new minifyCSS(), new TerserPlugin()
-    ]
+      new minifyCSS(),
+      new TerserPlugin(),
+    ],
+    splitChunks: { //Extraer dependencias dentro de js
+      chunks: 'all'
+    },
+    runtimeChunk: 'single' //Separate runtime
   }
 };

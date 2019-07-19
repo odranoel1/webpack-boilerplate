@@ -1,28 +1,25 @@
-let gulp = require('gulp');
-let browserSync = require('browser-sync');
-let webpack = require('webpack');
-let webpackDevMiddleware = require('webpack-dev-middleware');
-let hotMiddleware = require('webpack-hot-middleware');
-let config = require('./webpack.config.js');
+let gulp = require('gulp'),
+    browserSync = require('browser-sync'),
+    webpack = require('webpack'),
+    webpackDevMiddleware = require('webpack-dev-middleware'),
+    hotMiddleware = require('webpack-hot-middleware'),
+    config = require('./webpack.config.js'),
+    browser = browserSync.create(),
+    bundler = webpack(config);
 
-let browser = browserSync.create();
-let bundler = webpack(config);
+function startServer() {
+  let config = {
+    notify: false,
+    logLevel: "debug",
+    server: { baseDir: 'dist/' },
+    middleware: [
+      webpackDevMiddleware(bundler, { /* options */ }),
+      hotMiddleware(bundler)
+    ]
+  }
 
-function server() {
-
-    let config = {
-        server: {
-          baseDir: 'dist/'
-        },
-        middleware: [
-            webpackDevMiddleware(bundler, { /* options */ }),
-            hotMiddleware(bundler)
-        ],
-    }
-
-    browser.init(config)
-
-    gulp.watch('src/pug/*.pug').on('change', () => browser.reload())
+  browser.init(config);
+  gulp.watch('src/pug/*.pug').on('change', () => browser.reload());
 }
 
-server();
+startServer();
