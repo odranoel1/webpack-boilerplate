@@ -7,14 +7,13 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 //Hot Module Replacement -- Middleware
 const webpack = require('webpack');
-const hmr = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000';
+const hmr = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 module.exports = {
   mode: 'development',
   entry: {
     main: ['./src/js/main.js', hmr],
-    vendor: ['./src/js/vendor.js', hmr],
-    ts: ['./src/js/test.ts']
+    vendor: ['./src/js/vendor.js', hmr]
   },
   output: {
     path: path.join(__dirname, 'dist'),

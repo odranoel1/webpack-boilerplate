@@ -2,3 +2,26 @@
 @import './content/header';
 @import './content/style';
 @import './content/footer';
+
+//Responsive sizes
+$size_xs: 480px;
+$size_sm: 768px;
+$size_md: 992px;
+$size_lg: 1080px;
+
+//Colors
+$black: #000;
+$white: #fff;
+
+body {
+  background: $white;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 { font-size: 1.5em }
+h2 { font-size: 1.4em }
+h3 { font-size: 1.3em }
+h4 { font-size: 1.2em }
+h5 { font-size: 1.1em }
+p { font-size: 1em }
