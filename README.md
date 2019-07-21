@@ -1,8 +1,7 @@
 <div align="center">
-  <a href="https://github.com/webpack/webpack">
+  <a href="https://webpack.js.org/">
     <img width="200" height="200" src="https://webpack.js.org/assets/icon-square-big.svg">
   </a>
-  <br>
   <br>
   <h1>Webpack Boilerplate</h1>
   <p>
@@ -39,8 +38,6 @@ npm server
 
 ### Tecnologías usadas para el proyecto 🛠️
 
-_Menciona las herramientas que utilizaste para crear tu proyecto_
-
 * [browser-sync](https://www.browsersync.io/) - Sincroniza los últimos cambios realizados
 * [gulp](https://gulpjs.com/) - Gestiona las tareas y reduce tiempos
 * [sass](https://sass-lang.com/) - Hojas de estilos
@@ -50,4 +47,4 @@ _Menciona las herramientas que utilizaste para crear tu proyecto_
 * [bootstrap-4](https://getbootstrap.com/docs/4.0/getting-started/introduction/) - Framework de Css
 
 ## Autor
-* **Leo González** - *Desarrollador* -
+* **Leo González** -- *Desarrollador*
