@@ -14,6 +14,7 @@ module.exports = {
   entry: {
     main: ['./src/js/main.js', hmr],
     vendor: ['./src/js/vendor.js', hmr],
+    ts: ['./src/js/test.ts']
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -27,6 +28,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: [ 'ts-loader' ]
+      },
       {
         test: /\.pug$/,
         use: [
@@ -73,6 +78,9 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ]
+  },
   plugins: [
     new extractCss({
         filename: "assets/[name].css",
@@ -80,11 +88,11 @@ module.exports = {
     }),
     new cleanAssetDist(['dist/*']),
     new updateHtml({
-      filename: 'perro.html',
+      filename: 'index.html',
       template: './src/pug/index.pug'
     }),
     new updateHtml({
-      filename: 'nana.html',
+      filename: 'about.html',
       template: './src/pug/about.pug'
     }),
     new webpack.HotModuleReplacementPlugin(),
