@@ -33,7 +33,7 @@ npm install
 _Inicia el servidor de desarrollo con browser-sync y abre el proyecto en localhost:3000_
 
 ```
-npm server
+npm run server
 ```
 
 ### Tecnologías usadas para el proyecto 🛠️
@@ -47,4 +47,4 @@ npm server
 * [bootstrap-4](https://getbootstrap.com/docs/4.0/getting-started/introduction/) - Framework de Css
 
 ## Autor
-* **Leo González** -- *Desarrollador*
+**[Leo González](https://github.com/odranoel1)** -- *Desarrollador*
